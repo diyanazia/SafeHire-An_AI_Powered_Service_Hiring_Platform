@@ -1,0 +1,14 @@
+fetch("http://127.0.0.1:5000/workers")
+  .then(response => response.json())
+  .then(data => {
+      const container = document.getElementById("workerList");
+      data.forEach(worker => {
+          container.innerHTML += `
+              <div class="card">
+                  <h3>${worker.name}</h3>
+                  <p>Skills: ${worker.skills}</p>
+                  <p>Risk Score: ${worker.risk_score}</p>
+              </div>
+          `;
+      });
+  });
