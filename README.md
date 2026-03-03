@@ -5,14 +5,14 @@ The system integrates structured worker registration, risk assessment logic, and
 
 ---
 
-## 👩‍💻 Project Type
+##  Project Type
 CSE299 – Junior Design Project
 
 ---
 
-## 🚀 Current Features (Implemented So Far)
+##  Current Features (Implemented So Far)
 
-### ✅ Backend (Flask + SQLite)
+###  Backend (Flask + SQLite)
 - Worker Registration API (`POST /add_worker`)
 - Worker Listing API (`GET /workers`)
 - Duplicate NID prevention
@@ -20,7 +20,7 @@ CSE299 – Junior Design Project
 - Input validation
 - Clean REST response structure
 
-### ✅ Frontend
+###  Frontend
 - Worker Registration Page
 - Worker Dashboard
 - Worker Cards UI
@@ -29,4 +29,23 @@ CSE299 – Junior Design Project
 
 ---
 
-## 🏗️ Project Structure (Faculty Required Format)
+
+
+## Technologies Used
+
+- Python 3
+- Flask
+- Flask-SQLAlchemy
+- SQLite
+- HTML
+- CSS
+- JavaScript (Fetch API)
+
+---
+
+##  How To Run The Project
+
+### Install Dependencies
+
+```bash
+python -m pip install -r requirements.txt
