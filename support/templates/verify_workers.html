@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verification Dashboard - SafeHire</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+          colors: {
+            brand: {
+              50:  "#ECFEFF",
+              100: "#CFFAFE",
+              500: "#14B8A6",
+              600: "#0D9488",
+              700: "#0F766E"
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-[#FAFAFA] text-slate-900 font-sans">
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-[#E5E7EB]">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold">S</div>
+        <div>
+          <p class="font-semibold leading-5">SafeHire</p>
+          <p class="text-xs text-slate-500 -mt-0.5">Verification Dashboard</p>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-600">
+        <a class="hover:text-slate-900" href="/">Home</a>
+        <a class="hover:text-slate-900" href="/worker-dashboard">Workers</a>
+        <a class="hover:text-slate-900" href="/add-worker">Add Worker</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="mb-6">
+      <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">Verify Workers</h1>
+      <p class="text-slate-600 mt-1">Mark workers as Verified / Pending / Rejected.</p>
+    </div>
+
+    <section class="bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
+      <div id="verifyList" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+  </main>
+
+  <script src="/static/js/verify_workers.js"></script>
+</body>
+</html>
