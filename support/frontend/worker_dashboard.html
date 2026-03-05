@@ -1,39 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Worker Dashboard - SafeHire</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Worker Dashboard - SafeHire</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/worker_cards.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            padding: 20px;
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+          colors: {
+            brand: {
+              50:  "#ECFEFF",
+              100: "#CFFAFE",
+              500: "#14B8A6",
+              600: "#0D9488",
+              700: "#0F766E"
+            }
+          }
         }
+      }
+    }
+  </script>
 
-        h1 {
-            text-align: center;
-        }
-
-        #workerList {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-    </style>
+  <link rel="stylesheet" href="css/worker_cards.css" />
 </head>
-<body>
 
-    <h1>Registered Workers</h1>
+<body class="bg-[#FAFAFA] text-slate-900 font-sans">
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-[#E5E7EB]">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold">
+          S
+        </div>
+        <div>
+          <p class="font-semibold leading-5">SafeHire</p>
+          <p class="text-xs text-slate-500 -mt-0.5">Hire smarter with AI</p>
+        </div>
+      </div>
 
-    <!-- Worker cards will appear here -->
-    <div id="workerList"></div>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-600">
+        <a class="hover:text-slate-900" href="#">Workers</a>
+        <a class="hover:text-slate-900" href="#">Requests</a>
+        <a class="hover:text-slate-900" href="#">Dashboard</a>
+      </nav>
 
-    <!-- JS -->
-    <script src="js/worker_dashboard.js"></script>
+      <div class="flex items-center gap-2">
+        <button class="px-3 py-2 text-sm rounded-2xl border border-[#E5E7EB] bg-white hover:bg-slate-50">
+          Admin
+        </button>
+      </div>
+    </div>
+  </header>
 
+  <!-- Page -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Heading -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">Registered Workers</h1>
+        <p class="text-slate-600 mt-1">Browse and manage workers registered in SafeHire.</p>
+      </div>
+
+      <div class="w-full md:w-[360px]">
+        <div class="flex items-center gap-2 bg-white border border-[#E5E7EB] rounded-3xl px-3 py-2 transition hover:shadow-sm">
+          <span class="text-slate-400">🔎</span>
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search by name, skill, location..."
+            class="w-full bg-transparent outline-none text-sm placeholder:text-slate-400"
+          />
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="flex flex-wrap gap-2 mb-6">
+      <button class="px-3 py-1.5 rounded-full text-sm border border-[#E5E7EB] bg-white hover:bg-slate-50">
+        All
+      </button>
+      <button class="px-3 py-1.5 rounded-full text-sm border border-brand-100 bg-brand-50 text-brand-700 hover:bg-brand-100">
+        ✅ Verified
+      </button>
+      <button class="px-3 py-1.5 rounded-full text-sm border border-amber-100 bg-amber-50 text-amber-700 hover:bg-amber-100">
+        ⏳ Pending
+      </button>
+      <button class="px-3 py-1.5 rounded-full text-sm border border-emerald-100 bg-emerald-50 text-emerald-700 hover:bg-emerald-100">
+        ✨ Matched
+      </button>
+    </div>
+
+    <!-- Worker list wrapper -->
+    <section class="bg-white border border-[#E5E7EB] rounded-3xl p-4 md:p-6 transition hover:shadow-sm">
+      
+      <div id="emptyState" class="text-center py-10">
+        <p class="text-slate-700 font-medium">Loading workers…</p>
+        <p class="text-sm text-slate-500 mt-1">If nothing appears, check your API / JS console.</p>
+      </div>
+
+      <!-- Worker cards will appear here -->
+      <div id="workerList" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+
+    <p class="text-xs text-slate-500 mt-6">
+      Tip: Keep card shadows very subtle — only on hover — to match the “Modern Minimal + Soft” look.
+    </p>
+  </main>
+
+  <!-- JS -->
+  <script src="js/worker_dashboard.js"></script>
+
+  <script>
+    const workerList = document.getElementById("workerList");
+    const emptyState = document.getElementById("emptyState");
+
+    const obs = new MutationObserver(() => {
+      if (workerList.children.length > 0) emptyState.style.display = "none";
+    });
+    obs.observe(workerList, { childList: true });
+  </script>
 </body>
 </html>

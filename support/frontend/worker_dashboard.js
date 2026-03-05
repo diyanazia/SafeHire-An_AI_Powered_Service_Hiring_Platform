@@ -1,24 +1,146 @@
-fetch("http://127.0.0.1:5000/workers")
-  .then(response => response.json())
-  .then(data => {
-      const container = document.getElementById("workerList");
-      container.innerHTML = "";
+fetch("/workers")
+  .then((response) => {
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  })
+  .then((data) => {
+    const container = document.getElementById("workerList");
+    const emptyState = document.getElementById("emptyState");
 
-      if (data.length === 0) {
-          container.innerHTML = "<p>No workers registered yet.</p>";
-          return;
+    container.innerHTML = "";
+
+    if (!Array.isArray(data) || data.length === 0) {
+      if (emptyState) emptyState.style.display = "none";
+      container.innerHTML = `
+        <div class="col-span-full text-center py-10">
+          <p class="text-slate-700 font-medium">No workers registered yet.</p>
+          <p class="text-sm text-slate-500 mt-1">Add a worker to see them listed here.</p>
+        </div>
+      `;
+      return;
+    }
+
+    const toSkillArray = (skills) => {
+      if (Array.isArray(skills)) return skills.filter(Boolean);
+      if (typeof skills === "string") {
+        return skills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+      }
+      return [];
+    };
+
+    const riskPill = (risk) => {
+      const num = Number(risk);
+      if (Number.isNaN(num)) {
+        return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-50 text-slate-700 border border-slate-200">Risk: N/A</span>`;
+      }
+      if (num <= 30) {
+        return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Low risk • ${num}</span>`;
+      }
+      if (num <= 70) {
+        return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">Medium risk • ${num}</span>`;
+      }
+      return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-100">High risk • ${num}</span>`;
+    };
+
+    const statusPill = (worker) => {
+      const raw = (worker.status || worker.verification_status || "")
+        .toString()
+        .toLowerCase();
+
+      if (raw.includes("verified")) {
+        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-brand-50 text-brand-700 border border-brand-100">✅ Verified</span>`;
+      }
+      if (raw.includes("pending")) {
+        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">⏳ Pending</span>`;
+      }
+      if (raw.includes("matched")) {
+        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">✨ Matched</span>`;
       }
 
-      data.forEach(worker => {
-          container.innerHTML += `
-              <div class="card">
-                  <h3>${worker.name}</h3>
-                  <p><strong>Skills:</strong> ${worker.skills}</p>
-                  <p><strong>Risk Score:</strong> ${worker.risk_score}</p>
+      const r = Number(worker.risk_score);
+      if (!Number.isNaN(r) && r <= 30) {
+        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-brand-50 text-brand-700 border border-brand-100">✅ Verified</span>`;
+      }
+      if (!Number.isNaN(r) && r <= 70) {
+        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">⏳ Pending</span>`;
+      }
+      return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">✨ Matched</span>`;
+    };
+
+    data.forEach((worker) => {
+      const name = worker.name ?? "Unnamed Worker";
+      const skillsArr = toSkillArray(worker.skills);
+
+      const initials =
+        name
+          .split(" ")
+          .slice(0, 2)
+          .map((p) => p[0]?.toUpperCase())
+          .join("") || "W";
+
+      const skillTags =
+        skillsArr.length > 0
+          ? skillsArr
+              .slice(0, 5)
+              .map(
+                (s) =>
+                  `<span class="px-2.5 py-1 rounded-full text-xs bg-slate-50 border border-slate-200 text-slate-700">${s}</span>`
+              )
+              .join("")
+          : `<span class="text-sm text-slate-500">No skills provided</span>`;
+
+      container.innerHTML += `
+        <div class="bg-white border border-[#E5E7EB] rounded-3xl p-5 transition hover:shadow-sm">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="h-12 w-12 rounded-2xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-700 font-semibold">
+                ${initials}
               </div>
-          `;
-      });
+              <div>
+                <p class="font-semibold leading-5">${name}</p>
+                <p class="text-sm text-slate-600">Registered worker</p>
+              </div>
+            </div>
+
+            ${statusPill(worker)}
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            ${skillTags}
+          </div>
+
+          <div class="mt-5 flex items-center justify-between gap-3">
+            ${riskPill(worker.risk_score)}
+            <div class="flex gap-2">
+              <button class="px-4 py-2 rounded-2xl border border-[#E5E7EB] bg-white hover:bg-slate-50 text-sm font-medium">
+                View
+              </button>
+              <button class="px-4 py-2 rounded-2xl bg-brand-500 text-white hover:bg-brand-600 text-sm font-medium">
+                Hire
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    if (emptyState) emptyState.style.display = "none";
   })
-  .catch(error => {
-      console.error("Error loading workers:", error);
+  .catch((error) => {
+    console.error("Error loading workers:", error);
+
+    const container = document.getElementById("workerList");
+    const emptyState = document.getElementById("emptyState");
+    if (emptyState) emptyState.style.display = "none";
+
+    container.innerHTML = `
+      <div class="col-span-full bg-white border border-rose-200 rounded-3xl p-6">
+        <p class="font-semibold text-rose-700">Could not load workers</p>
+        <p class="text-sm text-slate-600 mt-1">Make sure Flask is running and /workers returns JSON.</p>
+        <p class="text-xs text-slate-500 mt-2">Error: ${String(error)}</p>
+      </div>
+    `;
   });
