@@ -1,6 +1,6 @@
 # SafeHire – AI Powered Service Hiring Platform
 
-SafeHire is a secure and intelligent service hiring platform designed to connect employers with verified workers.  
+SafeHire is a secure and intelligent web based service hiring platform designed to connect employers with verified workers.  
 The system integrates structured worker registration, risk assessment logic, and future AI-based verification layers to ensure safer hiring decisions.
 
 ---
@@ -18,17 +18,17 @@ CSE299 – Junior Design Project
 - Duplicate NID prevention
 - Basic risk score logic (AI placeholder)
 - Input validation
-- Clean REST response structure
+- Clean REST API response structure
 
 ###  Frontend
 - Worker Registration Page
 - Worker Dashboard
 - Worker Cards UI
-- JavaScript Fetch Integration
+- JavaScript Fetch API Integration
 - Clean CSS/JS structure
+- Modern minimal dashboard design
 
 ---
-
 
 
 ## Technologies Used
@@ -45,7 +45,24 @@ CSE299 – Junior Design Project
 
 ##  How To Run The Project
 
+### Clone the repository
+```bash
+git clone <repository-url>
+cd SafeHire-An_AI_Powered_Service_Hiring_Platform
+```
+
+---
 ### Install Dependencies
 
 ```bash
 python -m pip install -r requirements.txt
+```
+
+---
+### Run the Flask server
+
+```bash
+python app.py
+```
+
+---
