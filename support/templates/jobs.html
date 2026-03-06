@@ -37,7 +37,7 @@
         <div class="h-9 w-9 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold">S</div>
         <div>
           <p class="font-semibold leading-5">SafeHire</p>
-          <p class="text-xs text-slate-500 -mt-0.5">Job Posting Dashboard</p>
+          <p class="text-xs text-slate-500 -mt-0.5">Job Posting & Hiring</p>
         </div>
       </div>
 
@@ -45,6 +45,7 @@
         <a class="hover:text-slate-900" href="/">Home</a>
         <a class="hover:text-slate-900" href="/worker-dashboard">Workers</a>
         <a class="hover:text-slate-900" href="/verify-workers">Verify</a>
+        <a class="hover:text-slate-900" href="/transactions">Transactions</a>
       </nav>
     </div>
   </header>
@@ -52,72 +53,120 @@
   <main class="max-w-6xl mx-auto px-4 py-8">
     <div class="mb-6">
       <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">Jobs</h1>
-      <p class="text-slate-600 mt-1">Post new jobs and browse available job listings.</p>
+      <p class="text-slate-600 mt-1">Post jobs, manage listings, and hire verified workers.</p>
     </div>
 
     <section class="grid lg:grid-cols-3 gap-6">
-      <!-- Job Form -->
-      <div class="lg:col-span-1 bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
-        <h2 class="text-lg font-semibold">Post a Job</h2>
+      <!-- Left Column -->
+      <div class="lg:col-span-1 space-y-6">
+       
+        <div class="bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
+          <h2 class="text-lg font-semibold">Post a Job</h2>
 
-        <form id="jobForm" class="mt-4 space-y-4">
-          <div>
-            <label class="text-sm font-medium text-slate-700">Title</label>
-            <input
-              name="title"
-              required
-              placeholder="e.g. Electrician needed"
-              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
-            />
-          </div>
+          <form id="jobForm" class="mt-4 space-y-4">
+            <div>
+              <label class="text-sm font-medium text-slate-700">Title</label>
+              <input
+                name="title"
+                required
+                placeholder="e.g. Electrician needed"
+                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+              />
+            </div>
 
-          <div>
-            <label class="text-sm font-medium text-slate-700">Category</label>
-            <input
-              name="category"
-              required
-              placeholder="e.g. Electrical"
-              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
-            />
-          </div>
+            <div>
+              <label class="text-sm font-medium text-slate-700">Category</label>
+              <input
+                name="category"
+                required
+                placeholder="e.g. Electrical"
+                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+              />
+            </div>
 
-          <div>
-            <label class="text-sm font-medium text-slate-700">Location</label>
-            <input
-              name="location"
-              required
-              placeholder="e.g. Dhaka"
-              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
-            />
-          </div>
+            <div>
+              <label class="text-sm font-medium text-slate-700">Location</label>
+              <input
+                name="location"
+                required
+                placeholder="e.g. Dhaka"
+                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+              />
+            </div>
 
-          <div>
-            <label class="text-sm font-medium text-slate-700">Budget</label>
-            <input
-              name="budget"
-              type="number"
-              required
-              placeholder="e.g. 3000"
-              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
-            />
-          </div>
+            <div>
+              <label class="text-sm font-medium text-slate-700">Budget</label>
+              <input
+                name="budget"
+                type="number"
+                required
+                placeholder="e.g. 3000"
+                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+              />
+            </div>
 
-          <div>
-            <label class="text-sm font-medium text-slate-700">Description</label>
-            <textarea
-              name="description"
-              rows="4"
-              placeholder="Short job description"
-              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
-            ></textarea>
-          </div>
+            <div>
+              <label class="text-sm font-medium text-slate-700">Description</label>
+              <textarea
+                name="description"
+                rows="4"
+                placeholder="Short job description"
+                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+              ></textarea>
+            </div>
 
-          <button class="w-full px-4 py-3 rounded-2xl bg-brand-500 text-white font-medium hover:bg-brand-600">
-            Post Job
-          </button>
-        </form>
+            <button class="w-full px-4 py-3 rounded-2xl bg-brand-500 text-white font-medium hover:bg-brand-600">
+              Post Job
+            </button>
+          </form>
+        </div>
+
+        
+        <div class="bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
+          <h2 class="text-lg font-semibold">Hire Worker</h2>
+          <p class="text-sm text-slate-500 mt-1">Use a verified worker ID and an existing job ID.</p>
+
+          <form id="hireForm" class="mt-4 space-y-4">
+            <div>
+              <label class="text-sm font-medium text-slate-700">Employer Name</label>
+              <input
+                name="employer_name"
+                required
+                placeholder="e.g. Mahjabin Oishi"
+                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+              />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium text-slate-700">Job ID</label>
+              <input
+                name="job_id"
+                type="number"
+                required
+                placeholder="e.g. 1"
+                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+              />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium text-slate-700">Worker ID</label>
+              <input
+                name="worker_id"
+                type="number"
+                required
+                placeholder="e.g. 2"
+                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+              />
+            </div>
+
+            <button class="w-full px-4 py-3 rounded-2xl bg-brand-500 text-white font-medium hover:bg-brand-600">
+              Hire Worker
+            </button>
+          </form>
+        </div>
       </div>
 
+      <!-- Right Column -->
       <div class="lg:col-span-2 bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
         <div class="flex items-center justify-between gap-3 mb-4">
           <h2 class="text-lg font-semibold">Available Jobs</h2>

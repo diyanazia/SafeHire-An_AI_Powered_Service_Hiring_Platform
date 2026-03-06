@@ -89,3 +89,31 @@ document.getElementById("jobForm").addEventListener("submit", function (e) {
 });
 
 loadJobs();
+
+document.getElementById("hireForm").addEventListener("submit", function(e) {
+
+  e.preventDefault()
+
+  const formData = {
+    employer_name: this.employer_name.value,
+    job_id: this.job_id.value,
+    worker_id: this.worker_id.value
+  }
+
+  fetch("/hire", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.message || "Worker hired successfully")
+    this.reset()
+  })
+  .catch(error => {
+    console.error("Error hiring worker:", error)
+  })
+
+})
