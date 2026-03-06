@@ -26,16 +26,17 @@ class Worker(db.Model):
             "verification_status": self.verification_status
         }
     
-    class Job(db.Model):
+class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(120), nullable=False)
     category = db.Column(db.String(80), nullable=False)
     location = db.Column(db.String(120), nullable=False)
     budget = db.Column(db.Float, nullable=False, default=0.0)
-    description = db.Column(db.Text, nullable=True)
 
-    status = db.Column(db.String(20), default="open")  # open / assigned / completed
+    description = db.Column(db.Text, nullable=True)
+    
+    status = db.Column(db.String(20), default="open") 
 
     def to_dict(self):
         return {
