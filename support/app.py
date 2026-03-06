@@ -38,6 +38,10 @@ def verify_workers_page():
 def jobs_page():
     return render_template("jobs.html")
 
+@app.route("/transactions")
+def transactions_page():
+    return render_template("transactions.html")
+
 @app.route("/workers", methods=["GET"])
 def get_workers():
     workers = Worker.query.all()
