@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from support.models import db, Worker, Job
+from support.models import db, Worker, Job, HireTransaction
 
 app = Flask(
     __name__,
@@ -132,6 +132,52 @@ def add_job():
     db.session.commit()
 
     return jsonify({"message": "Job added successfully"})
+
+@app.route("/transactions_api", methods=["GET"])
+def get_transactions():
+    transactions = HireTransaction.query.all()
+    return jsonify([t.to_dict() for t in transactions])
+
+
+@app.route("/hire", methods=["POST"])
+def hire_worker():
+    data = request.get_json(silent=True) or {}
+
+    employer_name = data.get("employer_name", "").strip()
+    job_id = data.get("job_id")
+    worker_id = data.get("worker_id")
+
+    if not employer_name or not job_id or not worker_id:
+        return jsonify({"error": "Missing required fields"}), 400
+
+    worker = Worker.query.get(worker_id)
+    job = Job.query.get(job_id)
+
+    if not worker:
+        return jsonify({"error": "Worker not found"}), 404
+
+    if not job:
+        return jsonify({"error": "Job not found"}), 404
+
+    if worker.verification_status != "verified":
+        return jsonify({"error": "Only verified workers can be hired"}), 400
+
+    job.status = "assigned"
+
+    transaction = HireTransaction(
+        employer_name=employer_name,
+        job_id=job_id,
+        worker_id=worker_id,
+        status="assigned"
+    )
+
+    db.session.add(transaction)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Hiring recorded successfully",
+        "transaction": transaction.to_dict()
+    }), 201
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -48,3 +48,22 @@ class Job(db.Model):
             "description": self.description or "",
             "status": self.status
         }
+    
+class HireTransaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    employer_name = db.Column(db.String(120), nullable=False)
+
+    job_id = db.Column(db.Integer, nullable=False)
+    worker_id = db.Column(db.Integer, nullable=False)
+
+    status = db.Column(db.String(20), default="assigned") 
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "employer_name": self.employer_name,
+            "job_id": self.job_id,
+            "worker_id": self.worker_id,
+            "status": self.status
+        }
