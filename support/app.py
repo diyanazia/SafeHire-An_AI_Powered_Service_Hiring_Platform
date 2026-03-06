@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from support.models import db, Worker
+from support.models import db, Worker, Job
 
 app = Flask(
     __name__,
@@ -34,6 +34,10 @@ def add_worker_page():
 def verify_workers_page():
     return render_template("verify_workers.html")
 
+@app.route("/jobs")
+def jobs_page():
+    return render_template("jobs.html")
+
 @app.route("/workers", methods=["GET"])
 def get_workers():
     workers = Worker.query.all()
@@ -56,7 +60,8 @@ def add_worker():
     phone = data.get("phone", "").strip()
     address = data.get("address", "").strip()
     skills = data.get("skills", "").strip()
-
+    verification_status = data.get("verification_status", "pending")
+    
     if not all([name, nid, phone, address, skills]):
         return jsonify({"error": "Missing required fields"}), 400
     if Worker.query.filter_by(nid=nid).first():
@@ -94,6 +99,39 @@ def verify_worker(worker_id):
     worker.verification_status = status
     db.session.commit()
     return jsonify({"message": "Worker verification updated"})
+
+
+@app.route("/jobs_api", methods=["GET"])
+def get_jobs():
+
+    jobs = Job.query.all()
+
+    return jsonify([job.to_dict() for job in jobs])
+
+
+@app.route("/add_job", methods=["POST"])
+def add_job():
+
+    data = request.get_json()
+
+    title = data.get("title")
+    category = data.get("category")
+    location = data.get("location")
+    budget = data.get("budget")
+    description = data.get("description")
+
+    new_job = Job(
+        title=title,
+        category=category,
+        location=location,
+        budget=budget,
+        description=description
+    )
+
+    db.session.add(new_job)
+    db.session.commit()
+
+    return jsonify({"message": "Job added successfully"})
 
 if __name__ == "__main__":
     app.run(debug=True)

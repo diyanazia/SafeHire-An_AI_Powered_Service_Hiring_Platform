@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jobs - SafeHire</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+          colors: {
+            brand: {
+              50:  "#ECFEFF",
+              100: "#CFFAFE",
+              500: "#14B8A6",
+              600: "#0D9488",
+              700: "#0F766E"
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-[#FAFAFA] text-slate-900 font-sans">
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-[#E5E7EB]">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold">S</div>
+        <div>
+          <p class="font-semibold leading-5">SafeHire</p>
+          <p class="text-xs text-slate-500 -mt-0.5">Job Posting Dashboard</p>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-600">
+        <a class="hover:text-slate-900" href="/">Home</a>
+        <a class="hover:text-slate-900" href="/worker-dashboard">Workers</a>
+        <a class="hover:text-slate-900" href="/verify-workers">Verify</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="mb-6">
+      <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">Jobs</h1>
+      <p class="text-slate-600 mt-1">Post new jobs and browse available job listings.</p>
+    </div>
+
+    <section class="grid lg:grid-cols-3 gap-6">
+      <!-- Job Form -->
+      <div class="lg:col-span-1 bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
+        <h2 class="text-lg font-semibold">Post a Job</h2>
+
+        <form id="jobForm" class="mt-4 space-y-4">
+          <div>
+            <label class="text-sm font-medium text-slate-700">Title</label>
+            <input
+              name="title"
+              required
+              placeholder="e.g. Electrician needed"
+              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+            />
+          </div>
+
+          <div>
+            <label class="text-sm font-medium text-slate-700">Category</label>
+            <input
+              name="category"
+              required
+              placeholder="e.g. Electrical"
+              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+            />
+          </div>
+
+          <div>
+            <label class="text-sm font-medium text-slate-700">Location</label>
+            <input
+              name="location"
+              required
+              placeholder="e.g. Dhaka"
+              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+            />
+          </div>
+
+          <div>
+            <label class="text-sm font-medium text-slate-700">Budget</label>
+            <input
+              name="budget"
+              type="number"
+              required
+              placeholder="e.g. 3000"
+              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+            />
+          </div>
+
+          <div>
+            <label class="text-sm font-medium text-slate-700">Description</label>
+            <textarea
+              name="description"
+              rows="4"
+              placeholder="Short job description"
+              class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+            ></textarea>
+          </div>
+
+          <button class="w-full px-4 py-3 rounded-2xl bg-brand-500 text-white font-medium hover:bg-brand-600">
+            Post Job
+          </button>
+        </form>
+      </div>
+
+      <div class="lg:col-span-2 bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <h2 class="text-lg font-semibold">Available Jobs</h2>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-50 text-brand-700 border border-brand-100">
+            Open Jobs
+          </span>
+        </div>
+
+        <div id="jobList" class="grid gap-4 sm:grid-cols-2"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/js/jobs.js"></script>
+</body>
+</html>
