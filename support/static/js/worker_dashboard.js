@@ -30,64 +30,62 @@ fetch("/workers")
       }
       return [];
     };
+    const statusPill = (status) => {
+      if (status === "verified") {
+        return `
+          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-brand-50 text-brand-700 border border-brand-100">
+             Verified
+          </span>
+        `;
+      }
 
+      if (status === "rejected") {
+        return `
+          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-100">
+             Rejected
+          </span>
+        `;
+      }
+
+      return `
+        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">
+          ⏳ Pending
+        </span>
+      `;
+    };
+       
     const riskPill = (risk) => {
       const num = Number(risk);
       if (Number.isNaN(num)) {
         return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-50 text-slate-700 border border-slate-200">Risk: N/A</span>`;
       }
       if (num <= 30) {
-        return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Low risk • ${num}</span>`;
+        return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Low Risk • ${num}</span>`;
       }
       if (num <= 70) {
-        return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">Medium risk • ${num}</span>`;
+        return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">Medium Risk • ${num}</span>`;
       }
-      return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-100">High risk • ${num}</span>`;
-    };
-
-    const statusPill = (worker) => {
-      const raw = (worker.status || worker.verification_status || "")
-        .toString()
-        .toLowerCase();
-
-      if (raw.includes("verified")) {
-        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-brand-50 text-brand-700 border border-brand-100">✅ Verified</span>`;
-      }
-      if (raw.includes("pending")) {
-        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">⏳ Pending</span>`;
-      }
-      if (raw.includes("matched")) {
-        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">✨ Matched</span>`;
-      }
-
-      const r = Number(worker.risk_score);
-      if (!Number.isNaN(r) && r <= 30) {
-        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-brand-50 text-brand-700 border border-brand-100">✅ Verified</span>`;
-      }
-      if (!Number.isNaN(r) && r <= 70) {
-        return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-100">⏳ Pending</span>`;
-      }
-      return `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">✨ Matched</span>`;
+      return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-100">High Risk • ${num}</span>`;
     };
 
     data.forEach((worker) => {
-      const name = worker.name ?? "Unnamed Worker";
+      const name = worker.name || "Unnamed Worker";
       const skillsArr = toSkillArray(worker.skills);
-
+      const status = (worker.verification_status || "pending").toLowerCase();
       const initials =
         name
           .split(" ")
           .slice(0, 2)
           .map((p) => p[0]?.toUpperCase())
-          .join("") || "W";
+          .join("");
 
       const skillTags =
         skillsArr.length > 0
           ? skillsArr
               .slice(0, 5)
               .map(
-                (s) =>
-                  `<span class="px-2.5 py-1 rounded-full text-xs bg-slate-50 border border-slate-200 text-slate-700">${s}</span>`
+                (skill) =>
+                  `<span class="px-2.5 py-1 rounded-full text-xs bg-slate-50 border border-slate-200 text-slate-700">${skill}</span>`
               )
               .join("")
           : `<span class="text-sm text-slate-500">No skills provided</span>`;
@@ -97,7 +95,7 @@ fetch("/workers")
           <div class="flex items-start justify-between gap-4">
             <div class="flex items-center gap-4">
               <div class="h-12 w-12 rounded-2xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-700 font-semibold">
-                ${initials}
+                ${initials || "W"}
               </div>
               <div>
                 <p class="font-semibold leading-5">${name}</p>
@@ -105,7 +103,7 @@ fetch("/workers")
               </div>
             </div>
 
-            ${statusPill(worker)}
+            ${statusPill(status)}
           </div>
 
           <div class="mt-4 flex flex-wrap gap-2">
@@ -114,14 +112,9 @@ fetch("/workers")
 
           <div class="mt-5 flex items-center justify-between gap-3">
             ${riskPill(worker.risk_score)}
-            <div class="flex gap-2">
-              <button class="px-4 py-2 rounded-2xl border border-[#E5E7EB] bg-white hover:bg-slate-50 text-sm font-medium">
-                View
-              </button>
-              <button class="px-4 py-2 rounded-2xl bg-brand-500 text-white hover:bg-brand-600 text-sm font-medium">
-                Hire
-              </button>
-            </div>
+            <a href="/verify-workers" class="px-4 py-2 rounded-2xl border border-[#E5E7EB] bg-white hover:bg-slate-50 text-sm font-medium">
+              Review
+            </a>
           </div>
         </div>
       `;
