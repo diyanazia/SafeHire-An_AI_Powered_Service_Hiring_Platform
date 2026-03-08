@@ -1,8 +1,183 @@
-<form id="workerForm">
-  <input type="text" name="name" placeholder="Name" required>
-  <input type="number" name="nid" placeholder="NID" required>
-  <input type="tel" name="phone" placeholder="Phone" required>
-  <input type="text" name="address" placeholder="Address" required>
-  <input type="text" name="skills" placeholder="Skills">
-  <button type="submit">Add Worker</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Worker - SafeHire</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/worker_cards.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      margin: 0;
+      color: #0f172a;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 720px;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    }
+
+    h1 {
+      font-size: 42px;
+      margin: 0 0 12px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #475569;
+      margin-bottom: 28px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #334155;
+    }
+
+    input {
+      height: 48px;
+      border: 1px solid #d1d5db;
+      border-radius: 14px;
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+      background: #fff;
+    }
+
+    input:focus {
+      border-color: #14b8a6;
+      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
+    }
+
+    .actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    button {
+      height: 48px;
+      padding: 0 22px;
+      border: none;
+      border-radius: 14px;
+      background: #14b8a6;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.95;
+    }
+
+    .message {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .message.success {
+      display: block;
+      background: #ecfeff;
+      color: #0f766e;
+      border: 1px solid #99f6e4;
+    }
+
+    .message.error {
+      display: block;
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    @media (max-width: 700px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <h1>Register a Worker</h1>
+      <p class="subtitle">Add worker details to SafeHire for verification and matching.</p>
+
+      <form id="workerForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter worker name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="nid">NID</label>
+            <input type="text" id="nid" name="nid" placeholder="Enter NID number" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" placeholder="Enter address" required>
+          </div>
+
+          <div class="form-group full">
+            <label for="skills">Skills</label>
+            <input type="text" id="skills" name="skills" placeholder="Example: Electrician, Wiring, Repair" required>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit">Add Worker</button>
+        </div>
+
+        <div id="formMessage" class="message"></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/worker_api.js') }}"></script>
+</body>
+</html>

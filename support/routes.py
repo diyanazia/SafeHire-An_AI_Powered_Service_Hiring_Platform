@@ -36,14 +36,7 @@ def transactions_page():
 @app.route("/workers", methods=["GET"])
 def get_workers():
     workers = Worker.query.all()
-    return jsonify([
-        {
-            "id": w.id,
-            "name": w.name,
-            "skills": w.skills,
-            "risk_score": w.risk_score,
-            "verification_status": w.verification_status
-        }
+    return jsonify([w.to_dict()
         for w in workers
     ])
 
@@ -73,7 +66,7 @@ def add_worker():
         address=address,
         skills=skills,
         risk_score=risk_score,
-        verification_status="pending"
+        verification_status="Pending"
     )
 
     db.session.add(new_worker)
@@ -87,7 +80,7 @@ def verify_worker(worker_id):
     data = request.get_json(silent=True) or {}
     status = (data.get("status") or "").strip().lower()
 
-    if status not in ["pending", "verified", "rejected"]:
+    if status not in ["Pending", "Verified", "Rejected"]:
         return jsonify({"error": "Invalid status"}), 400
 
     worker = Worker.query.get(worker_id)
@@ -118,12 +111,16 @@ def add_job():
 
     if not all([title, category, location]) or budget in [None, ""]:
         return jsonify({"error": "Missing required fields"}), 400
+    try:
+        budget = float(budget)
+    except (TypeError, ValueError):
+        return jsonify({"error": "Budget must be a number"}), 400
 
     new_job = Job(
         title=title,
         category=category,
         location=location,
-        budget=float(budget),
+        budget=budget,
         description=description
     )
 
