@@ -156,7 +156,7 @@ def hire_worker():
     if not job:
         return jsonify({"error": "Job not found"}), 404
 
-    if worker.verification_status != "verified":
+    if worker.verification_status != "Verified":
         return jsonify({"error": "Only verified workers can be hired"}), 400
 
     job.status = "assigned"
