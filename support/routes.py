@@ -78,7 +78,7 @@ def add_worker():
 @app.route("/verify_worker/<int:worker_id>", methods=["POST"])
 def verify_worker(worker_id):
     data = request.get_json(silent=True) or {}
-    status = (data.get("status") or "").strip().lower()
+    status = (data.get("status") or "").strip()
 
     if status not in ["Pending", "Verified", "Rejected"]:
         return jsonify({"error": "Invalid status"}), 400
@@ -90,7 +90,7 @@ def verify_worker(worker_id):
     worker.verification_status = status
     db.session.commit()
 
-    return jsonify({"message": "Worker verification updated"})
+    return jsonify({"message": "Worker Verification Updated"})
 
 
 @app.route("/jobs_api", methods=["GET"])

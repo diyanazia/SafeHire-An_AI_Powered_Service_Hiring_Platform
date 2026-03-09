@@ -5,14 +5,14 @@ fetch("/workers")
     box.innerHTML = "";
 
     const pillClass = (status) => {
-      if (status === "verified") return "bg-brand-50 text-brand-700 border-brand-100";
-      if (status === "rejected") return "bg-rose-50 text-rose-700 border-rose-100";
+      if (status === "Verified") return "bg-brand-50 text-brand-700 border-brand-100";
+      if (status === "Rejected") return "bg-rose-50 text-rose-700 border-rose-100";
       return "bg-amber-50 text-amber-700 border-amber-100";
     };
 
     const label = (status) => {
-      if (status === "verified") return "✅ Verified";
-      if (status === "rejected") return "❌ Rejected";
+      if (status === "Verified") return "✅ Verified";
+      if (status === "Rejected") return "❌ Rejected";
       return "⏳ Pending";
     };
 
@@ -31,17 +31,17 @@ fetch("/workers")
           </div>
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <button data-id="${w.id}" data-status="verified"
+            <button data-id="${w.id}" data-status="Verified"
               class="px-3 py-2 rounded-2xl bg-brand-500 text-white text-sm hover:bg-brand-600">
               Verify
             </button>
 
-            <button data-id="${w.id}" data-status="pending"
+            <button data-id="${w.id}" data-status="Pending"
               class="px-3 py-2 rounded-2xl border border-[#E5E7EB] bg-white text-sm hover:bg-slate-50">
               Pending
             </button>
 
-            <button data-id="${w.id}" data-status="rejected"
+            <button data-id="${w.id}" data-status="Rejected"
               class="px-3 py-2 rounded-2xl bg-rose-500 text-white text-sm hover:bg-rose-600">
               Reject
             </button>
