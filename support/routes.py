@@ -133,7 +133,22 @@ def add_job():
 @app.route("/transactions_api", methods=["GET"])
 def get_transactions():
     transactions = HireTransaction.query.all()
-    return jsonify([t.to_dict() for t in transactions])
+    result = []
+
+    for t in transactions:
+        worker = Worker.query.get(t.worker_id)
+        job = Job.query.get(t.job_id)
+
+        result.append({
+            "id": t.id,
+            "employer_name": t.employer_name,
+            "worker_name": worker.name if worker else "Unknown",
+            "job_title": job.title if job else "Unknown",
+            "location": job.location if job else "Unknown",
+            "status": t.status
+        })
+
+    return jsonify(result)
 
 
 @app.route("/hire", methods=["POST"])
