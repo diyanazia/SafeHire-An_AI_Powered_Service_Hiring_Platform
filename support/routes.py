@@ -98,6 +98,43 @@ def get_jobs():
     jobs = Job.query.all()
     return jsonify([job.to_dict() for job in jobs])
 
+@app.route("/job_matches", methods=["GET"])
+def get_job_matches():
+    jobs = Job.query.all()
+    workers = Worker.query.all()
+
+    result = []
+
+    for job in jobs:
+        best_worker = None
+        best_score = -999999
+
+        for worker in workers:
+            score = 0
+
+            if worker.verification_status != "Verified":
+                continue
+
+            if job.category.lower() in worker.skills.lower():
+                score += 50
+
+            score += 30  # verified bonus
+            score -= worker.risk_score
+
+            if score > best_score:
+                best_score = score
+                best_worker = worker
+
+        result.append({
+            "job_id": job.id,
+            "job_title": job.title,
+            "matched_worker": best_worker.name if best_worker else "No suitable worker found",
+            "worker_id": best_worker.id if best_worker else None,
+            "score": best_score if best_worker else None
+        })
+
+    return jsonify(result)
+
 
 @app.route("/add_job", methods=["POST"])
 def add_job():

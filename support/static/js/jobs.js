@@ -18,20 +18,22 @@ function getStatusLabel(status) {
   return "Open";
 }
 
-function renderJobs(jobs) {
+function renderJobs(jobs, matchMap = {}) {
   jobList.innerHTML = "";
 
   if (!Array.isArray(jobs) || jobs.length === 0) {
     jobList.innerHTML = `
       <div class="sm:col-span-2 text-center py-10">
-        <p class="text-slate-700 font-medium">No jobs posted yet.</p>
-        <p class="text-sm text-slate-500 mt-1">Post a job to see it listed here.</p>
+        <p class="text-slate-700 font-medium">No jobs posted yet</p>
+        <p class="text-sm text-slate-500 mt-1">Post a job to see it listed here</p>
       </div>
     `;
     return;
   }
 
   jobs.forEach((job) => {
+    const match = matchMap[job.id];
+
     jobList.innerHTML += `
       <div class="border border-[#E5E7EB] rounded-3xl p-5 transition hover:shadow-sm bg-white">
         <div class="flex items-start justify-between gap-3">
@@ -45,6 +47,18 @@ function renderJobs(jobs) {
         </div>
 
         <p class="text-sm text-slate-600 mt-4">${job.description || "No description provided."}</p>
+        
+                <div class="mt-4 p-3 rounded-2xl bg-brand-50 border border-brand-100">
+          <p class="text-xs font-semibold text-brand-700 uppercase tracking-wide">Suggested Worker</p>
+          <p class="text-sm text-slate-800 mt-1">
+            ${match ? match.matched_worker : "No suggestion available"}
+          </p>
+          ${
+            match && match.worker_id
+              ? `<p class="text-xs text-slate-500 mt-1">Worker ID: ${match.worker_id} • Match Score: ${match.score}</p>`
+              : ""
+          }
+        </div>
 
         <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
           <p class="text-sm font-medium text-slate-700">Budget: ৳${job.budget}</p>
@@ -57,11 +71,23 @@ function renderJobs(jobs) {
 
 async function loadJobs() {
   try {
-    const response = await fetch("/jobs_api");
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const [jobsResponse, matchesResponse] = await Promise.all([
+      fetch("/jobs_api"),
+      fetch("/job_matches")
+    ]);
 
-    const jobs = await response.json();
-    renderJobs(jobs);
+    if (!jobsResponse.ok) throw new Error(`Jobs HTTP ${jobsResponse.status}`);
+    if (!matchesResponse.ok) throw new Error(`Matches HTTP ${matchesResponse.status}`);
+
+    const jobs = await jobsResponse.json();
+    const matches = await matchesResponse.json();
+
+    const matchMap = {};
+    matches.forEach((m) => {
+      matchMap[m.job_id] = m;
+    });
+
+    renderJobs(jobs, matchMap);
   } catch (error) {
     console.error("Error loading jobs:", error);
     jobList.innerHTML = `
