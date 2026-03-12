@@ -14,7 +14,7 @@ workerForm.addEventListener("submit", async (e) => {
     skills: formData.get("skills").trim()
   };
 
-  formMessage.className = "message";
+  formMessage.className = "hidden";
   formMessage.textContent = "";
 
   try {
@@ -33,10 +33,17 @@ workerForm.addEventListener("submit", async (e) => {
     }
 
     formMessage.textContent = result.message || "Worker added successfully";
-    formMessage.className = "message success";
+
+    formMessage.className =
+      "mt-4 px-4 py-3 rounded-xl text-sm font-medium border border-emerald-400/30 bg-emerald-500/20 text-emerald-200";
+
     workerForm.reset();
+
   } catch (error) {
+
     formMessage.textContent = error.message || "Something went wrong";
-    formMessage.className = "message error";
+
+    formMessage.className =
+      "mt-4 px-4 py-3 rounded-xl text-sm font-medium border border-rose-400/30 bg-rose-500/20 text-rose-200";
   }
 });

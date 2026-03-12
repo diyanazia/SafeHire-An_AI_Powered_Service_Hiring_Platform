@@ -4,180 +4,166 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Add Worker - SafeHire</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/worker_cards.css') }}">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fafafa;
-      margin: 0;
-      color: #0f172a;
-    }
 
-    .page {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    .card {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 24px;
-      padding: 40px;
-      max-width: 720px;
-      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
-    }
-
-    h1 {
-      font-size: 42px;
-      margin: 0 0 12px;
-    }
-
-    .subtitle {
-      font-size: 18px;
-      color: #475569;
-      margin-bottom: 28px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      width: 100%;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .form-group.full {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #334155;
-    }
-
-    input {
-      height: 48px;
-      border: 1px solid #d1d5db;
-      border-radius: 14px;
-      padding: 0 14px;
-      font-size: 15px;
-      outline: none;
-      width: 100%;
-      box-sizing: border-box;
-      background: #fff;
-    }
-
-    input:focus {
-      border-color: #14b8a6;
-      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
-    }
-
-    .actions {
-      margin-top: 24px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    button {
-      height: 48px;
-      padding: 0 22px;
-      border: none;
-      border-radius: 14px;
-      background: #14b8a6;
-      color: white;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    button:hover {
-      opacity: 0.95;
-    }
-
-    .message {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      font-size: 14px;
-      display: none;
-    }
-
-    .message.success {
-      display: block;
-      background: #ecfeff;
-      color: #0f766e;
-      border: 1px solid #99f6e4;
-    }
-
-    .message.error {
-      display: block;
-      background: #fef2f2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-    }
-
-    @media (max-width: 700px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 32px;
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui"]
+          },
+          colors: {
+            brand: {
+              50: "#F5D0FE",
+              100: "#F0ABFC",
+              500: "#EC4899",
+              600: "#DB2777",
+              700: "#BE185D"
+            }
+          },
+          boxShadow: {
+            glow: "0 0 40px rgba(236,72,153,0.25)"
+          }
+        }
       }
     }
-  </style>
+  </script>
 </head>
-<body>
-  <div class="page">
-    <div class="card">
-      <h1>Register a Worker</h1>
-      <p class="subtitle">Add worker details to SafeHire for verification and matching.</p>
 
-      <form id="workerForm">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter worker name" required>
+<body class="min-h-screen font-sans text-white bg-gradient-to-br from-[#0B1020] via-[#24124D] to-[#6B21A8]">
+  <header class="sticky top-0 z-50 bg-black/30 backdrop-blur border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center font-bold text-white">
+          S
+        </div>
+        <div>
+          <p class="font-semibold leading-5 text-white">SafeHire</p>
+          <p class="text-xs text-gray-300 -mt-0.5">AI Powered Hiring Platform</p>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm text-gray-300">
+        <a class="hover:text-white" href="/">Home</a>
+        <a class="hover:text-white" href="/worker-dashboard">Workers</a>
+        <a class="hover:text-white" href="/add-worker">Add Worker</a>
+        <a class="hover:text-white" href="/verify-workers">Verify</a>
+        <a class="hover:text-white" href="/jobs">Jobs</a>
+        <a class="hover:text-white" href="/transactions">Transactions</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <div class="max-w-3xl mx-auto rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-10 shadow-2xl">
+      <div class="mb-8">
+        <div class="inline-flex items-center px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur text-sm text-pink-200 mb-5">
+          Worker Registration Portal
+        </div>
+
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">
+          Register a Worker
+        </h1>
+
+        <p class="mt-3 text-lg text-gray-300 max-w-2xl">
+          Add worker details to SafeHire for verification, job matching, and safer hiring decisions.
+        </p>
+      </div>
+
+      <form id="workerForm" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label for="name" class="block text-sm font-semibold text-white mb-2">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter worker name"
+              required
+              class="w-full h-12 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 px-4 outline-none focus:ring-4 focus:ring-pink-500/20 focus:border-pink-400"
+            />
           </div>
 
-          <div class="form-group">
-            <label for="nid">NID</label>
-            <input type="text" id="nid" name="nid" placeholder="Enter NID number" required>
+          <div>
+            <label for="nid" class="block text-sm font-semibold text-white mb-2">NID</label>
+            <input
+              type="text"
+              id="nid"
+              name="nid"
+              placeholder="Enter NID number"
+              required
+              class="w-full h-12 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 px-4 outline-none focus:ring-4 focus:ring-pink-500/20 focus:border-pink-400"
+            />
           </div>
 
-          <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+          <div>
+            <label for="phone" class="block text-sm font-semibold text-white mb-2">Phone</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="Enter phone number"
+              required
+              class="w-full h-12 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 px-4 outline-none focus:ring-4 focus:ring-pink-500/20 focus:border-pink-400"
+            />
           </div>
 
-          <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" id="address" name="address" placeholder="Enter address" required>
+          <div>
+            <label for="address" class="block text-sm font-semibold text-white mb-2">Address</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              placeholder="Enter address"
+              required
+              class="w-full h-12 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 px-4 outline-none focus:ring-4 focus:ring-pink-500/20 focus:border-pink-400"
+            />
           </div>
 
-          <div class="form-group full">
-            <label for="skills">Skills</label>
-            <input type="text" id="skills" name="skills" placeholder="Example: Electrician, Wiring, Repair" required>
+          <div class="md:col-span-2">
+            <label for="skills" class="block text-sm font-semibold text-white mb-2">Skills</label>
+            <input
+              type="text"
+              id="skills"
+              name="skills"
+              placeholder="Example: Electrician, Wiring, Repair"
+              required
+              class="w-full h-12 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 px-4 outline-none focus:ring-4 focus:ring-pink-500/20 focus:border-pink-400"
+            />
           </div>
         </div>
 
-        <div class="actions">
-          <button type="submit">Add Worker</button>
+        <div class="pt-2">
+          <button
+            type="submit"
+            class="inline-flex items-center px-6 py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold hover:opacity-90 transition shadow-glow"
+          >
+            Add Worker
+          </button>
         </div>
 
-        <div id="formMessage" class="message"></div>
+        <div id="formMessage" class="hidden rounded-2xl px-4 py-3 text-sm font-medium"></div>
       </form>
     </div>
-  </div>
+  </main>
 
   <script src="{{ url_for('static', filename='js/worker_api.js') }}"></script>
+
+  <script>
+    const formMessage = document.getElementById("formMessage");
+
+    const observer = new MutationObserver(() => {
+      if (formMessage.textContent.trim() !== "") {
+        formMessage.classList.remove("hidden");
+      }
+    });
+
+    observer.observe(formMessage, { childList: true, subtree: true });
+  </script>
 </body>
 </html>

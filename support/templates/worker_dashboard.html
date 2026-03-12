@@ -1,133 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Worker Dashboard - SafeHire</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Worker Dashboard - SafeHire</title>
 
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
-          colors: {
-            brand: {
-              50:  "#ECFEFF",
-              100: "#CFFAFE",
-              500: "#14B8A6",
-              600: "#0D9488",
-              700: "#0F766E"
-            }
-          }
-        }
-      }
-    }
-  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/worker_cards.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+theme: {
+extend: {
+fontFamily: { sans: ["Inter","ui-sans-serif","system-ui"] },
+
+colors: {
+brand: {
+50:"#F5D0FE",
+100:"#F0ABFC",
+500:"#EC4899",
+600:"#DB2777",
+700:"#BE185D"
+}
+}
+
+}
+}
+}
+</script>
+
 </head>
 
-<body class="bg-[#FAFAFA] text-slate-900 font-sans">
-  <!-- Navbar -->
-  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-[#E5E7EB]">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold">
-          S
-        </div>
-        <div>
-          <p class="font-semibold leading-5">SafeHire</p>
-          <p class="text-xs text-slate-500 -mt-0.5">Hire smarter with AI</p>
-        </div>
-      </div>
+<body class="min-h-screen font-sans text-white bg-gradient-to-br from-[#0B1020] via-[#24124D] to-[#6B21A8]">
 
-      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-600">
-        <a class="hover:text-slate-900" href="#">Workers</a>
-        <a class="hover:text-slate-900" href="#">Requests</a>
-        <a class="hover:text-slate-900" href="#">Dashboard</a>
-      </nav>
 
-      <div class="flex items-center gap-2">
-        <button class="px-3 py-2 text-sm rounded-2xl border border-[#E5E7EB] bg-white hover:bg-slate-50">
-          Admin
-        </button>
-      </div>
-    </div>
-  </header>
+<header class="sticky top-0 z-50 bg-black/30 backdrop-blur border-b border-white/10">
 
-  <!-- Page -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <!-- Heading -->
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
-      <div>
-        <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">Registered Workers</h1>
-        <p class="text-slate-600 mt-1">Browse and manage workers registered in SafeHire.</p>
-      </div>
+<div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
 
-      <div class="w-full md:w-[360px]">
-        <div class="flex items-center gap-2 bg-white border border-[#E5E7EB] rounded-3xl px-3 py-2 transition hover:shadow-sm">
-          <span class="text-slate-400">🔎</span>
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Search by name, skill, location..."
-            class="w-full bg-transparent outline-none text-sm placeholder:text-slate-400"
-          />
-        </div>
-      </div>
-    </div>
+<div class="flex items-center gap-3">
 
-    
-    <div class="flex flex-wrap gap-2 mb-6">
-      <button class="px-3 py-1.5 rounded-full text-sm border border-[#E5E7EB] bg-white hover:bg-slate-50">
-        All
-      </button>
-      <button class="px-3 py-1.5 rounded-full text-sm border border-brand-100 bg-brand-50 text-brand-700 hover:bg-brand-100">
-        ✅ Verified
-      </button>
-      <button class="px-3 py-1.5 rounded-full text-sm border border-amber-100 bg-amber-50 text-amber-700 hover:bg-amber-100">
-        ⏳ Pending
-      </button>
-      <button class="px-3 py-1.5 rounded-full text-sm border border-emerald-100 bg-emerald-50 text-emerald-700 hover:bg-emerald-100">
-        ✨ Matched
-      </button>
-    </div>
+<div class="h-9 w-9 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center font-bold">
+S
+</div>
 
-    <!-- Worker list wrapper -->
-    <section class="bg-white border border-[#E5E7EB] rounded-3xl p-4 md:p-6 transition hover:shadow-sm">
-      
-      <div id="emptyState" class="text-center py-10">
-        <p class="text-slate-700 font-medium">Loading workers…</p>
-        <p class="text-sm text-slate-500 mt-1">If nothing appears, check your API / JS console.</p>
-      </div>
+<div>
+<p class="font-semibold leading-5 text-white">SafeHire</p>
+<p class="text-xs text-gray-300 -mt-0.5">AI Powered Hiring Platform</p>
+</div>
 
-      <!-- Worker cards will appear here -->
-      <div id="workerList" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
-    </section>
+</div>
 
-    <p class="text-xs text-slate-500 mt-6">
-      Tip: Keep card shadows very subtle — only on hover — to match the “Modern Minimal + Soft” look.
-    </p>
-  </main>
+<nav class="hidden md:flex items-center gap-6 text-sm text-gray-300">
 
-  <!-- JS -->
-  <script src="/static/js/worker_dashboard.js"></script>
+<a class="hover:text-white" href="/">Home</a>
 
-  <script>
-    const workerList = document.getElementById("workerList");
-    const emptyState = document.getElementById("emptyState");
+<a class="hover:text-white" href="/worker-dashboard">Workers</a>
 
-    const obs = new MutationObserver(() => {
-      if (workerList.children.length > 0) emptyState.style.display = "none";
-    });
-    obs.observe(workerList, { childList: true });
-  </script>
+<a class="hover:text-white" href="/add-worker">Add Worker</a>
+
+<a class="hover:text-white" href="/verify-workers">Verify</a>
+
+<a class="hover:text-white" href="/jobs">Jobs</a>
+
+<a class="hover:text-white" href="/transactions">Transactions</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<main class="max-w-6xl mx-auto px-4 py-8">
+
+
+<div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+
+<div>
+<h1 class="text-3xl font-semibold">Registered Workers</h1>
+<p class="text-gray-300 mt-1">Browse and manage workers registered in SafeHire.</p>
+</div>
+
+
+<div class="w-full md:w-[360px]">
+
+<div class="flex items-center gap-2 bg-white/10 border border-white/10 rounded-3xl px-3 py-2 backdrop-blur">
+
+<span class="text-gray-300">🔎</span>
+
+<input
+id="searchInput"
+type="text"
+placeholder="Search by name, skill, location..."
+class="w-full bg-transparent outline-none text-sm placeholder:text-gray-400 text-white"
+/>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="flex flex-wrap gap-2 mb-6">
+
+<button class="px-3 py-1.5 rounded-full text-sm border border-white/10 bg-white/10 hover:bg-white/20">
+All
+</button>
+
+<button class="px-3 py-1.5 rounded-full text-sm border border-emerald-400/20 bg-emerald-500/20 text-emerald-300">
+Verified
+</button>
+
+<button class="px-3 py-1.5 rounded-full text-sm border border-amber-400/20 bg-amber-500/20 text-amber-300">
+Pending
+</button>
+
+<button class="px-3 py-1.5 rounded-full text-sm border border-purple-400/20 bg-purple-500/20 text-purple-300">
+Matched
+</button>
+
+</div>
+
+
+<section class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur">
+
+
+<div id="emptyState" class="text-center py-10">
+
+<p class="text-white font-medium">Loading workers…</p>
+
+<p class="text-sm text-gray-400 mt-1">
+If nothing appears, check your API / JS console.
+</p>
+
+</div>
+
+
+<div id="workerList" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+</section>
+
+
+<p class="text-xs text-gray-400 mt-6">
+
+Tip: Worker cards will appear here dynamically from the API.
+
+</p>
+
+</main>
+
+
+<script src="/static/js/worker_dashboard.js"></script>
+
+<script>
+
+const workerList = document.getElementById("workerList")
+const emptyState = document.getElementById("emptyState")
+
+const obs = new MutationObserver(() => {
+if (workerList.children.length > 0)
+emptyState.style.display = "none"
+})
+
+obs.observe(workerList,{childList:true})
+
+</script>
+
 </body>
 </html>

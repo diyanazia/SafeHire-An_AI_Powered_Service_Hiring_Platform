@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -17,12 +17,15 @@
           fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
           colors: {
             brand: {
-              50:  "#ECFEFF",
-              100: "#CFFAFE",
-              500: "#14B8A6",
-              600: "#0D9488",
-              700: "#0F766E"
+              50: "#F5D0FE",
+              100: "#F0ABFC",
+              500: "#EC4899",
+              600: "#DB2777",
+              700: "#BE185D"
             }
+          },
+          boxShadow: {
+            glow: "0 0 40px rgba(236,72,153,0.25)"
           }
         }
       }
@@ -30,147 +33,151 @@
   </script>
 </head>
 
-<body class="bg-[#FAFAFA] text-slate-900 font-sans">
-  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-[#E5E7EB]">
+<body class="min-h-screen font-sans text-white bg-gradient-to-br from-[#0B1020] via-[#24124D] to-[#6B21A8]">
+  <header class="sticky top-0 z-50 bg-black/30 backdrop-blur border-b border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold">S</div>
+        <div class="h-9 w-9 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center font-bold text-white">
+          S
+        </div>
         <div>
-          <p class="font-semibold leading-5">SafeHire</p>
-          <p class="text-xs text-slate-500 -mt-0.5">Job Posting & Hiring</p>
+          <p class="font-semibold leading-5 text-white">SafeHire</p>
+          <p class="text-xs text-gray-300 -mt-0.5">Job Posting & Hiring</p>
         </div>
       </div>
 
-      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-600">
-        <a class="hover:text-slate-900" href="/">Home</a>
-        <a class="hover:text-slate-900" href="/worker-dashboard">Workers</a>
-        <a class="hover:text-slate-900" href="/verify-workers">Verify</a>
-        <a class="hover:text-slate-900" href="/transactions">Transactions</a>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-gray-300">
+        <a class="hover:text-white" href="/">Home</a>
+        <a class="hover:text-white" href="/worker-dashboard">Workers</a>
+        <a class="hover:text-white" href="/add-worker">Add Worker</a>
+        <a class="hover:text-white" href="/verify-workers">Verify</a>
+        <a class="hover:text-white" href="/jobs">Jobs</a>
+        <a class="hover:text-white" href="/transactions">Transactions</a>
       </nav>
     </div>
   </header>
 
   <main class="max-w-6xl mx-auto px-4 py-8">
     <div class="mb-6">
-      <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">Jobs</h1>
-      <p class="text-slate-600 mt-1">Post jobs, manage listings, and hire verified workers.</p>
+      <div class="inline-flex items-center px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur text-sm text-pink-200 mb-4">
+        Job Management Portal
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Jobs</h1>
+      <p class="text-gray-300 mt-2">Post jobs, manage listings, and hire verified workers.</p>
     </div>
 
     <section class="grid lg:grid-cols-3 gap-6">
-      <!-- Left Column -->
       <div class="lg:col-span-1 space-y-6">
-       
-        <div class="bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
-          <h2 class="text-lg font-semibold">Post a Job</h2>
+        <div class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-xl shadow-2xl">
+          <h2 class="text-lg font-semibold text-white">Post a Job</h2>
 
           <form id="jobForm" class="mt-4 space-y-4">
             <div>
-              <label class="text-sm font-medium text-slate-700">Title</label>
+              <label class="text-sm font-medium text-white">Title</label>
               <input
                 name="title"
                 required
                 placeholder="e.g. Electrician needed"
-                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+                class="mt-1 w-full px-4 py-3 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:ring-pink-500/20"
               />
             </div>
 
             <div>
-              <label class="text-sm font-medium text-slate-700">Category</label>
+              <label class="text-sm font-medium text-white">Category</label>
               <input
                 name="category"
                 required
                 placeholder="e.g. Electrical"
-                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+                class="mt-1 w-full px-4 py-3 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:ring-pink-500/20"
               />
             </div>
 
             <div>
-              <label class="text-sm font-medium text-slate-700">Location</label>
+              <label class="text-sm font-medium text-white">Location</label>
               <input
                 name="location"
                 required
                 placeholder="e.g. Dhaka"
-                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+                class="mt-1 w-full px-4 py-3 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:ring-pink-500/20"
               />
             </div>
 
             <div>
-              <label class="text-sm font-medium text-slate-700">Budget</label>
+              <label class="text-sm font-medium text-white">Budget</label>
               <input
                 name="budget"
                 type="number"
                 required
                 placeholder="e.g. 3000"
-                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+                class="mt-1 w-full px-4 py-3 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:ring-pink-500/20"
               />
             </div>
 
             <div>
-              <label class="text-sm font-medium text-slate-700">Description</label>
+              <label class="text-sm font-medium text-white">Description</label>
               <textarea
                 name="description"
                 rows="4"
                 placeholder="Short job description"
-                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+                class="mt-1 w-full px-4 py-3 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:ring-pink-500/20"
               ></textarea>
             </div>
 
-            <button class="w-full px-4 py-3 rounded-2xl bg-brand-500 text-white font-medium hover:bg-brand-600">
+            <button class="w-full px-4 py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 text-white font-medium hover:opacity-90 transition shadow-glow">
               Post Job
             </button>
           </form>
         </div>
 
-        
-        <div class="bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
-          <h2 class="text-lg font-semibold">Hire Worker</h2>
-          <p class="text-sm text-slate-500 mt-1">Use a verified worker ID and an existing job ID.</p>
+        <div class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-xl shadow-2xl">
+          <h2 class="text-lg font-semibold text-white">Hire Worker</h2>
+          <p class="text-sm text-gray-300 mt-1">Use a verified worker ID and an existing job ID.</p>
 
           <form id="hireForm" class="mt-4 space-y-4">
             <div>
-              <label class="text-sm font-medium text-slate-700">Employer Name</label>
+              <label class="text-sm font-medium text-white">Employer Name</label>
               <input
                 name="employer_name"
                 required
                 placeholder="e.g. Mahjabin Oishi"
-                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+                class="mt-1 w-full px-4 py-3 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:ring-pink-500/20"
               />
             </div>
 
             <div>
-              <label class="text-sm font-medium text-slate-700">Job ID</label>
+              <label class="text-sm font-medium text-white">Job ID</label>
               <input
                 name="job_id"
                 type="number"
                 required
                 placeholder="e.g. 1"
-                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+                class="mt-1 w-full px-4 py-3 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:ring-pink-500/20"
               />
             </div>
 
             <div>
-              <label class="text-sm font-medium text-slate-700">Worker ID</label>
+              <label class="text-sm font-medium text-white">Worker ID</label>
               <input
                 name="worker_id"
                 type="number"
                 required
                 placeholder="e.g. 2"
-                class="mt-1 w-full px-4 py-2.5 rounded-2xl border border-[#E5E7EB] focus:outline-none focus:ring-4 focus:ring-brand-100"
+                class="mt-1 w-full px-4 py-3 rounded-2xl border border-white/10 bg-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:ring-pink-500/20"
               />
             </div>
 
-            <button class="w-full px-4 py-3 rounded-2xl bg-brand-500 text-white font-medium hover:bg-brand-600">
+            <button class="w-full px-4 py-3 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 text-white font-medium hover:opacity-90 transition shadow-glow">
               Hire Worker
             </button>
           </form>
         </div>
       </div>
 
-      <!-- Right Column -->
-      <div class="lg:col-span-2 bg-white border border-[#E5E7EB] rounded-3xl p-6 transition hover:shadow-sm">
+      <div class="lg:col-span-2 bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-xl shadow-2xl">
         <div class="flex items-center justify-between gap-3 mb-4">
-          <h2 class="text-lg font-semibold">Available Jobs</h2>
-          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-50 text-brand-700 border border-brand-100">
+          <h2 class="text-lg font-semibold text-white">Available Jobs</h2>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-pink-500/20 text-pink-300 border border-pink-400/20">
             Open Jobs
           </span>
         </div>
